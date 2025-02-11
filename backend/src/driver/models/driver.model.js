@@ -5,8 +5,8 @@ const DriverSchema = new mongoose.Schema({
     carId: { type: mongoose.Schema.Types.ObjectId, ref: "Car", required: true },
     licenseNumber: { type: String, unique: true, required: true },
     isAvailable: { type: Boolean, default: true },
-    rating: { type: Number, default: 5 }
   }, { timestamps: true });
+  
   
   module.exports = mongoose.model("Driver", DriverSchema);
   
