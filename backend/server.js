@@ -1,17 +1,20 @@
-const express =require('express');
-const app=express();
-require('dotenv').config();
-const PORT=process.env.PORT|| 8000;
+const express = require('express');
+const app = express();
+require('dotenv').config(); // Load environment variables from .env file
+
+// Set the PORT from environment variables or default to 8000
+const PORT = process.env.PORT || 8000;
+
+// Middleware to parse JSON in request bodies
 app.use(express.json());
 
-app.use('/user',require('./src/User/routes/route'));
-app.use('/car',require('./src/car/router/route'));
+app.use('/api',require('./src/User/routes/route'));
 
-// backend connection
-const dbconnect=require('./src/dbconnection/database');
+// Backend database connection
+const dbconnect = require('./src/dbconnection/database');
 dbconnect();
 
 app.listen(PORT,()=>{
-    console.log(`server started successfully ${PORT}`)
+    console.log("server started successfully")
 })
 
