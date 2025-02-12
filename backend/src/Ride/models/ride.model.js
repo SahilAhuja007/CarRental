@@ -1,9 +1,9 @@
-import mongoose from mongoose
+const mongoose = require('mongoose');
 
 const RideSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     driverId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    carId: { type: mongoose.Schema.Types.ObjectId, ref: "Car", required: true },
+    // carId: { type: mongoose.Schema.Types.ObjectId, ref: "Car", required: true },
     pickupLocation: {
       type: { type: String, default: "Point" },
       coordinates: [Number]
