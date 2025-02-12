@@ -89,7 +89,7 @@ exports.login = async (req, res) => {
         console.log(token);
         return res.status(200).json({
             success: true,
-            data: token,
+            data: {token,exist},
             message: "login successfully"
         });
 
