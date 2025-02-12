@@ -23,6 +23,11 @@ const rentSchema=new mongoose.Schema({
   totalamount:{
     type:Number,
     required:true
+  },
+  
+  status:{
+    type:String,
+    enum:["initiated","started","ongoing","cancelled","completed"]
   }
 });
 
