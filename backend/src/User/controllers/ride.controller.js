@@ -39,7 +39,7 @@ const bookRide = async (req, res) => {
         const ride = await Ride.create({
             userId,
             driverId: availableDriver._id,
-            carId, // Ensure that carId is included in the request body or handled in the code
+            // carId, // Ensure that carId is included in the request body or handled in the code
             pickupLocation,
             dropLocation,
             fare,
