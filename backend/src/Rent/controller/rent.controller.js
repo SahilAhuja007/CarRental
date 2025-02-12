@@ -1,6 +1,6 @@
 const Rent=require('../models/rent.model');
-const Car=require('.../car/carSchema');
-const User=require('.../User/models/user.model');
+const Car=require('../../car/carSchema');
+const User=require('../../User/models/user.model');
 
 exports.createrent=async(req,res)=>{
     try{
@@ -37,9 +37,11 @@ exports.createrent=async(req,res)=>{
         // create rent now
         let ownerid=car.ownerId;
         let duration=time;
-        let totalamount=time*car.pricePerHour;
-        const rent=await Rent.create({carid,ownerid,dealerid,duration,totalamount});
-
+        let totalamount=parseInt(time)*car.pricePerHour;
+        console.log("data Rent",req.body)
+        console.log("totalAmount",totalamount);
+        const rent=await Rent.create({car:carid,owner:ownerid,dealer:dealerid,duration,totalamount});
+        console.log("rent",rent);
         res.status(200)
         .json({
             success:true,

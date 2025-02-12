@@ -17,7 +17,5 @@ const RideSchema = new mongoose.Schema({
     paymentStatus: { type: String, enum: ["pending", "paid"], default: "pending" },
   }, { timestamps: true });
   
-//   RideSchema.index({ pickupLocation: "2dsphere", dropLocation: "2dsphere" });
-  
   module.exports = mongoose.model("Ride", RideSchema);
   
