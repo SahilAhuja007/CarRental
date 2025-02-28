@@ -1,0 +1,66 @@
+[
+    {
+      "id": 1,
+      "name": "Toyota Camry",
+      "title": "Sedan",
+      "description": "A reliable sedan known for its comfort, spacious interior, and excellent fuel economy. Ideal for everyday commuting.",
+      "image": "https://tflcar.com/wp-content/uploads/2017/06/2018-toyota-camry-se-hybrid.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Honda Civic",
+      "title": "Compact",
+      "description": "A compact car with a sporty design and agile handling, offering a blend of performance and efficiency.",
+      "image": "https://tse2.mm.bing.net/th?id=OIP.5flIjAsXrN6n0Y0T_2NDWQHaEK&pid=Api&P=0&h=180"
+    },
+    {
+      "id": 3,
+      "name": "Ford Explorer",
+      "title": "SUV",
+      "description": "A spacious SUV perfect for family trips, featuring advanced safety technology and plenty of cargo space.",
+      "image": "https://tse3.mm.bing.net/th?id=OIP.AEXfs35m_qHIxNbQAwwfcAHaEG&pid=Api&P=0&h=180"
+    },
+    {
+      "id": 4,
+      "name": "BMW 3 Series",
+      "title": "Luxury Sedan",
+      "description": "A luxury sedan that combines performance with elegance, offering a thrilling driving experience and premium features.",
+      "image": "https://tse4.mm.bing.net/th?id=OIP.zqKrvmAQM_ASCaXYFPDknwHaE7&pid=Api&P=0&h=180"
+    },
+    {
+      "id": 5,
+      "name": "Land Rover Defender",
+      "title": "Off-Road SUV",
+      "description": "A rugged off-road SUV designed for adventure, featuring advanced terrain response technology and a bold design.",
+      "image": "https://tse2.mm.bing.net/th?id=OIP.mLJcFlcIjj0B-9bsw2e3bQHaE8&pid=Api&P=0&h=180"
+    },
+    {
+      "id": 6,
+      "name": "Audi Q5",
+      "title": "Luxury SUV",
+      "description": "A luxury SUV that offers a refined driving experience, high-end technology, and a spacious interior for comfort.",
+      "image": "https://tse2.mm.bing.net/th?id=OIP.KCNAFPRaLaMXlA1QMvF1TwHaEK&pid=Api&P=0&h=180"
+    },
+    {
+      "id": 7,
+      "name": "Mini Cooper",
+      "title": "Luxury SUV",
+      "description": "A luxury SUV that offers a refined driving experience, high-end technology, and a spacious interior for comfort.",
+      "image": "https://tse1.mm.bing.net/th?id=OIP.rV4NuwEMwHxhgG7oBviFlQHaEK&pid=Api&P=0&h=180"
+    },
+    {
+        "id": 8,
+        "name":"TATA-Nano",
+        "title": "Economy Car",
+        "description": "A luxury SUV that offers a refined driving experience, high-end technology, and a spacious interior for comfort.",
+        "image": "https://tse1.mm.bing.net/th?id=OIP.P-p8vb_tCfvF2Wey-Uw-ngHaF0&pid=Api&P=0&h=180"
+    },
+    {
+      "id": 9,
+      "name": "Ritz",
+      "title": "HatchBack",
+      "description": "The Ritz is a stylish hatchback that combines sporty performance with practical features. It offers a comfortable ride, advanced technology, and excellent fuel efficiency, making it perfect for both city driving and long journeys.",
+      "image": "https://tse3.mm.bing.net/th?id=OIP.jkE4broUYZXGjUBfJNwfygHaEh&pid=Api&P=0&h=180"
+  }
+  
+]
