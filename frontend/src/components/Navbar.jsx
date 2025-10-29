@@ -1,12 +1,27 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const sosNumber = '+91-7678036883'; // Admin's Number
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigate = useNavigate();
+  const sosNumber = "+91-7678036883";
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsAuthenticated(!!token);
+  }, []);
 
   const handleSosCall = () => {
     window.location.href = `tel:${sosNumber}`;
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsAuthenticated(false);
+    navigate("/");
+    window.location.reload();
   };
 
   return (
@@ -34,7 +49,6 @@ const Navbar = () => {
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   strokeLinecap="round"
@@ -49,7 +63,6 @@ const Navbar = () => {
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   strokeLinecap="round"
@@ -63,52 +76,84 @@ const Navbar = () => {
         </div>
 
         {/* Navigation Links */}
-        <ul className={`flex-col md:flex-row md:space-x-6 md:text-2xl md:flex ${menuOpen ? 'flex' : 'hidden'} space-y-4 md:space-y-0`}>
+        <ul
+          className={`flex-col md:flex-row md:space-x-6 md:text-2xl md:flex ${
+            menuOpen ? "flex" : "hidden"
+          } space-y-4 md:space-y-0`}
+        >
           <li>
-            <Link
-              to="/"
-              className="hover:text-orange-400 transition duration-300"
-              onClick={() => setMenuOpen(false)} // Close menu on link click
-            >
+            <Link to="/" className="hover:text-orange-400" onClick={() => setMenuOpen(false)}>
               Home
             </Link>
           </li>
           <li>
-            <Link
-              to="/about"
-              className="hover:text-orange-400 transition duration-300"
-              onClick={() => setMenuOpen(false)}
-            >
+            <Link to="/about" className="hover:text-orange-400" onClick={() => setMenuOpen(false)}>
               About
             </Link>
           </li>
           <li>
-            <Link
-              to="/contact"
-              className="hover:text-orange-400 transition duration-300"
-              onClick={() => setMenuOpen(false)}
-            >
+            <Link to="/contact" className="hover:text-orange-400" onClick={() => setMenuOpen(false)}>
               Contact
             </Link>
           </li>
           <li>
-            <Link
-              to="/blah"
-              className="hover:text-orange-400 transition duration-300"
-              onClick={() => setMenuOpen(false)}
-            >
+            <Link to="/blah" className="hover:text-orange-400" onClick={() => setMenuOpen(false)}>
               CarPool
             </Link>
           </li>
-          <li>
-            <Link
-              to="/Logsign"
-              className="hover:text-orange-400 transition duration-300"
-              onClick={() => setMenuOpen(false)}
-            >
-              Login/Sign-up🙎
-            </Link>
-          </li>
+
+          {isAuthenticated ? (
+            <li className="relative">
+              {/* Profile Button */}
+              <button
+                onClick={() => setProfileOpen(!profileOpen)}
+                className="flex items-center space-x-2 hover:text-orange-400"
+              >
+                <img
+                  src="https://via.placeholder.com/40"
+                  alt="User"
+                  className="w-8 h-8 rounded-full border border-white"
+                />
+                <span>Profile ⏷</span>
+              </button>
+
+              {/* Profile Dropdown */}
+              {profileOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg overflow-hidden z-20">
+                  <Link
+                    to="/bookings"
+                    className="block px-4 py-2 text-white hover:bg-gray-700"
+                    onClick={() => setProfileOpen(false)}
+                  >
+                    My Bookings 
+                  </Link>
+                  <Link
+                    to="/profile"
+                    className="block px-4 py-2 text-white hover:bg-gray-700"
+                    onClick={() => setProfileOpen(false)}
+                  >
+                    Edit Profile 
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="block w-full text-left px-4 py-2 text-white hover:bg-red-600"
+                  >
+                    Logout 
+                  </button>
+                </div>
+              )}
+            </li>
+          ) : (
+            <li>
+              <Link
+                to="/Logsign"
+                className="hover:text-orange-400"
+                onClick={() => setMenuOpen(false)}
+              >
+                Login/Sign-up 🙎
+              </Link>
+            </li>
+          )}
         </ul>
 
         {/* SOS Button (Visible on All Screens) */}
@@ -122,7 +167,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* SOS Button for Mobile (Visible outside the hamburger menu) */}
+      {/* SOS Button for Mobile */}
       <div className="md:hidden flex justify-center py-4">
         <button
           onClick={handleSosCall}

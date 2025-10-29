@@ -1,44 +1,53 @@
-const Car =require('../carSchema');
+const Car = require("../carSchema");
 
-exports.getAllCars=async(req,res)=>{
-    try{
-        const car=await Car.find({});
+exports.getAllCars = async (req, res) => {
+  try {
+    const cars = await Car.find({});
+    console.log("cars:- ", cars);
 
-        res.status(200)
-        .json({
-            success:true,
-            data:car,
-            message:"cars fetched successfully"
-        })
-    }
-    catch(e){
-        res.status(500)
-        .json({
-            success:false,
-            data:e.message,
-            message:"issue while fetching cars"
-        })
-    }
-}
+    res.status(200).json({
+      success: true,
+      data: cars,
+      message: "cars fetched successfully",
+    });
+  } catch (e) {
+    res.status(500).json({
+      success: false,
+      data: e.message,
+      message: "issue while fetching cars",
+    });
+  }
+};
+exports.getCar = async (req, res) => {
+  try {
+    const { id } = req.params; // Extract ID from URL params
 
-exports.getCar=async(req,res)=>{
-    try{
-        const id=req.body;
-        const car=await Car.findById(id);
+    if (!id || id.length !== 24) {
+      // Ensure ID is valid
+      return res.status(400).json({
+        success: false,
+        message: "Invalid Car ID",
+      });
+    }
 
-        res.status(200)
-        .json({
-            success:true,
-            data:car,
-            message:"car fetched successfully"
-        })
+    const car = await Car.findById(id.trim());
+    if (!car) {
+      return res.status(404).json({
+        success: false,
+        message: "Car not found",
+      });
     }
-    catch(e){
-        res.status(500)
-        .json({
-            success:false,
-            data:e.message,
-            message:"issue while fetching car"
-        })
-    }
-}
+
+    res.status(200).json({
+      success: true,
+      data: car,
+      message: "Car fetched successfully",
+    });
+  } catch (e) {
+    res.status(500).json({
+      success: false,
+      message: "Issue while fetching car",
+      error: e.message,
+    });
+  }
+};

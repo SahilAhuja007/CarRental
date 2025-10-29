@@ -1,39 +1,66 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const SellCar = () => {
   const [carDetails, setCarDetails] = useState({
-    carName: "",
-    description: "",
-    year: "",
-    photo: null,
+    model: "",
+    brand: "",
+    plateNumber: "",
+    type: "",
+    seatingCapacity: "",
+    fuelType: "",
+    pricePerHour: "",
+    location: "",
+    images: null,
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setCarDetails((prevDetails) => ({
-      ...prevDetails,
+    setCarDetails((prev) => ({
+      ...prev,
       [name]: value,
     }));
   };
 
-  const handlePhotoChange = (e) => {
-    setCarDetails((prevDetails) => ({
-      ...prevDetails,
-      photo: e.target.files[0],
+  const handleimagesChange = (e) => {
+    setCarDetails((prev) => ({
+      ...prev,
+      images: e.target.files[0],
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const carData = {
-      ...carDetails,
-      photo: carDetails.photo ? carDetails.photo.name : null,
-    };
 
-    const existingCars = JSON.parse(localStorage.getItem("cars")) || [];
-    localStorage.setItem("cars", JSON.stringify([...existingCars, carData]));
+    try {
+      const formData = new FormData();
+      console.log("cardetail:-" + carDetails);
+      for (const key in carDetails) {
+        formData.append(key, carDetails[key]);
+      }
+      console.log("formdata:- ", formData);
 
-    alert("Car registered successfully!");
+      // ✅ Example: Send JWT token in Authorization header
+      const token = localStorage.getItem("token");
+      console.log("formdata:- ", formData);
+
+      const response = await axios.post(
+        "http://localhost:8000/car/createCar",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`, // ✅ attach JWT here
+          },
+        }
+      );
+
+      alert("Car registered successfully!");
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+      alert("Error registering car. Please try again.");
+    }
   };
 
   return (
@@ -42,51 +69,125 @@ const SellCar = () => {
         <h2 className="text-3xl font-semibold text-white text-center mb-6">
           Register Your Car for Rent
         </h2>
-        {/* model, brand, priceperhour,platenumber,seatingcapacity,fueltype,location,images,type(sedan,suv,hatchback,luxury) */}
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="text-white">Car Model</label>
             <input
               type="text"
-              name="carName"
-              value={carDetails.carName}
+              name="model"
+              value={carDetails.model}
               onChange={handleChange}
               required
-              className="w-full p-3 mt-1 bg-white bg-opacity-30 text-white placeholder-gray-200 border-none rounded focus:ring-2 focus:ring-blue-300"
-              placeholder="Enter car name"
+              className="w-full p-3 mt-1 bg-white bg-opacity-30 text-white placeholder-gray-200 rounded focus:ring-2 focus:ring-blue-300"
+              placeholder="Enter car model"
             />
           </div>
 
           <div>
-            <label className="text-white">Description</label>
-            <textarea
-              name="description"
-              value={carDetails.description}
+            <label className="text-white">Brand</label>
+            <input
+              type="text"
+              name="brand"
+              value={carDetails.brand}
               onChange={handleChange}
               required
-              className="w-full p-3 mt-1 bg-white bg-opacity-30 text-white placeholder-gray-200 border-none rounded focus:ring-2 focus:ring-blue-300"
-              placeholder="Describe your car"
+              className="w-full p-3 mt-1 bg-white bg-opacity-30 text-white placeholder-gray-200 rounded focus:ring-2 focus:ring-blue-300"
+              placeholder="Enter brand name"
             />
           </div>
 
           <div>
-            <label className="text-white">Year of Buying</label>
+            <label className="text-white">Plate Number</label>
+            <input
+              type="text"
+              name="plateNumber"
+              value={carDetails.plateNumber}
+              onChange={handleChange}
+              required
+              className="w-full p-3 mt-1 bg-white bg-opacity-30 text-white placeholder-gray-200 rounded focus:ring-2 focus:ring-blue-300"
+              placeholder="Enter plate number"
+            />
+          </div>
+
+          <div>
+            <label className="text-white">Car Type</label>
+            <select
+              name="type"
+              value={carDetails.type}
+              onChange={handleChange}
+              required
+              className="w-full p-3 mt-1 bg-white bg-opacity-30 text-white rounded focus:ring-2 focus:ring-blue-300"
+            >
+              <option value="">Select Type</option>
+              <option value="sedan">Sedan</option>
+              <option value="suv">SUV</option>
+              <option value="hatchback">Hatchback</option>
+              <option value="luxury">Luxury</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="text-white">Seating Capacity</label>
             <input
               type="number"
-              name="year"
-              value={carDetails.year}
+              name="seatingCapacity"
+              value={carDetails.seatingCapacity}
               onChange={handleChange}
               required
-              className="w-full p-3 mt-1 bg-white bg-opacity-30 text-white placeholder-gray-200 border-none rounded focus:ring-2 focus:ring-blue-300"
-              placeholder="Enter year"
+              className="w-full p-3 mt-1 bg-white bg-opacity-30 text-white placeholder-gray-200 rounded focus:ring-2 focus:ring-blue-300"
+              placeholder="Enter seating capacity"
             />
           </div>
 
           <div>
-            <label className="text-white">Car Photo</label>
+            <label className="text-white">Fuel Type</label>
+            <select
+              name="fuelType"
+              value={carDetails.fuelType}
+              onChange={handleChange}
+              required
+              className="w-full p-3 mt-1 bg-white bg-opacity-30 text-white rounded focus:ring-2 focus:ring-blue-300"
+            >
+              <option value="">Select Fuel Type</option>
+              <option value="petrol">Petrol</option>
+              <option value="diesel">Diesel</option>
+              <option value="electric">Electric</option>
+              <option value="hybrid">Hybrid</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="text-white">Price Per Hour (₹)</label>
+            <input
+              type="number"
+              name="pricePerHour"
+              value={carDetails.pricePerHour}
+              onChange={handleChange}
+              required
+              className="w-full p-3 mt-1 bg-white bg-opacity-30 text-white placeholder-gray-200 rounded focus:ring-2 focus:ring-blue-300"
+              placeholder="Enter price per hour"
+            />
+          </div>
+
+          <div>
+            <label className="text-white">Location</label>
+            <input
+              type="text"
+              name="location"
+              value={carDetails.location}
+              onChange={handleChange}
+              required
+              className="w-full p-3 mt-1 bg-white bg-opacity-30 text-white placeholder-gray-200 rounded focus:ring-2 focus:ring-blue-300"
+              placeholder="Enter car location"
+            />
+          </div>
+
+          <div>
+            <label className="text-white">Car images</label>
             <input
               type="file"
-              onChange={handlePhotoChange}
+              onChange={handleimagesChange}
               required
               className="w-full mt-2 text-white file:bg-blue-500 file:border-none file:rounded-lg file:px-4 file:py-2 file:text-white file:hover:bg-blue-600 transition cursor-pointer"
             />

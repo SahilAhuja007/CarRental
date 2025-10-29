@@ -1,22 +1,37 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-require('dotenv').config(); // Load environment variables from .env file
+const fileUpload = require("express-fileupload");
+require("dotenv").config();
+const cors = require("cors");
 
-// Set the PORT from environment variables or default to 8000
+// Set the PORT
 const PORT = process.env.PORT || 8000;
 
-// Middleware to parse JSON in request bodies
+// Middlewares
 app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // for parsing form data
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "/tmp/",
+  })
+);
+app.use(cors());
 
-app.use('/user',require('./src/User/routes/route'));
-app.use('/rent',require('./src/Rent/routes/rout'));
-app.use('/car',require('./src/car/router/route'));
+// Routes
+app.use("/user", require("./src/User/routes/route"));
+app.use("/rent", require("./src/Rent/routes/rout"));
+app.use("/car", require("./src/car/router/route"));
 
-// Backend database connection
-const dbconnect = require('./src/dbconnection/database');
+// Database
+const dbconnect = require("./src/dbconnection/database");
 dbconnect();
 
-app.listen(PORT,()=>{
-    console.log(`server started successfully ${PORT}`)
-})
+// Cloudinary
+const { connectClouinary } = require("./src/cloudinary/cloudinary");
+connectClouinary();
 
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server started successfully on port ${PORT}`);
+});

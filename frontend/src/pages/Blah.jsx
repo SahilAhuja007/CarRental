@@ -7,8 +7,10 @@ const Blah = () => {
       id: 1,
       from: 'Delhi',
       to: 'Jaipur',
-      date: '2023-10-25',
-      driver: 'John Doe',
+      Car: 'Suzuki Swift VXI',
+      date: '2025-03-5',
+      time: '5:30 PM',
+      driver: 'sahil ahuja',
       seats: 3,
       price: 500,
     },
@@ -16,19 +18,23 @@ const Blah = () => {
       id: 2,
       from: 'Mumbai',
       to: 'Pune',
-      date: '2023-10-26',
-      driver: 'Jane Smith',
+      Car: 'Mg Hector',
+      date: '2025-03-12',
+      time: '10:30 PM',
+      driver: 'sunita sharma',
       seats: 2,
       price: 400,
     },
     {
       id: 3,
-      from: 'Bangalore',
-      to: 'Chennai',
+      from: 'chembur',
+      to: 'Badlapur',
+      Car: 'Tata Curvv',
       date: '2023-10-27',
-      driver: 'Alice Johnson',
+      time: '7:00 AM',
+      driver: 'Mohit Patil',
       seats: 4,
-      price: 600,
+      price: 300,
     },
   ]);
 
@@ -36,7 +42,9 @@ const Blah = () => {
   const [newRide, setNewRide] = useState({
     from: '',
     to: '',
+    Car: ' Hyundai Aura',
     date: '',
+    time: '05:30 pm',
     seats: '',
     price: '',
   });
@@ -59,8 +67,10 @@ const Blah = () => {
       id: rides.length + 1, // Generate a unique ID
       from: newRide.from,
       to: newRide.to,
+      Car: newRide.Car,
       date: newRide.date,
-      driver: 'You', // Default driver name (can be dynamic)
+      time: newRide.time,
+      driver: 'kaivalya jeswani', // Default driver name (can be dynamic)
       seats: newRide.seats,
       price: newRide.price,
     };
@@ -72,7 +82,9 @@ const Blah = () => {
     setNewRide({
       from: '',
       to: '',
+      Car: '',
       date: '',
+      time: '',
       seats: '',
       price: '',
     });
@@ -103,6 +115,11 @@ const Blah = () => {
             type="date"
             className="p-2 border rounded-lg"
           />
+          <input
+            type="text"
+            placeholder="Time"
+            className="p-2 border rounded-lg"
+          />
           <button
             type="submit"
             className="bg-gray-600 text-white p-2 rounded-lg hover:bg-gray-700"
@@ -120,7 +137,9 @@ const Blah = () => {
             <div key={ride.id} className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-xl font-bold">{ride.from} → {ride.to}</h3>
               <p className="text-gray-600 mt-2">Driver: {ride.driver}</p>
+              <p className="text-gray-600">Car: {ride.Car}</p>
               <p className="text-gray-600">Date: {ride.date}</p>
+              <p className="text-gray-600">time: {ride.time}</p>
               <p className="text-gray-600">Seats: {ride.seats}</p>
               <p className="text-gray-600">Price: ₹{ride.price}</p>
               <button className="mt-4 bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700">
@@ -130,6 +149,7 @@ const Blah = () => {
           ))}
         </div>
       </div>
+
 
       {/* Post a Ride Section */}
       <div className="container mx-auto mt-8 p-6 bg-white rounded-lg shadow-md w-[500px]">

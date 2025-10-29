@@ -1,9 +1,8 @@
-const User = require('../User/models/user.model');
 const jwt = require('jsonwebtoken');
 
-export const auth = (req, res, next) => {
+const auth = (req, res, next) => {
   try {
-    const { token } = req.body;
+    const token = req.headers.authorization?.split(" ")[1];
 
     if (!token) {
       return res.status(401).json({
@@ -13,22 +12,15 @@ export const auth = (req, res, next) => {
     }
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-    console.log("Payload: ", payload);
-
-    if (!payload.role) {
-      return res.status(403).json({
-        success: false,
-        message: "No role specified in the token"
-      });
-    }
-
-    req.user = payload; // Attach payload to request for future use
-    next(); // Proceed to the next middleware or route handler
+    req.user = payload;
+    next();
   } catch (e) {
-    return res.status(500).json({
+    return res.status(401).json({
       success: false,
-      message: "Authentication error",
+      message: "Invalid or expired token",
       error: e.message
     });
   }
 };
+
+module.exports = auth;

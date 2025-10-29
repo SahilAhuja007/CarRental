@@ -6,14 +6,15 @@ exports.createrent = async (req, res) => {
     try {
         const { carid, dealerid, time } = req.body;
 
+        // ✅ Validate required fields
         if (!carid || !dealerid || !time) {
             return res.status(400).json({
                 success: false,
-                message: "Please fill all the required fields: carid, dealerid, time."
+                message: "All fields are required: carid, dealerid, time."
             });
         }
 
-        // Check if car exists
+        // ✅ Check if car exists
         const car = await Car.findById(carid);
         if (!car) {
             return res.status(404).json({
@@ -22,7 +23,7 @@ exports.createrent = async (req, res) => {
             });
         }
 
-        // Check if dealer (user) exists
+        // ✅ Check if dealer (user) exists
         const user = await User.findById(dealerid);
         if (!user) {
             return res.status(404).json({
@@ -31,14 +32,14 @@ exports.createrent = async (req, res) => {
             });
         }
 
-        // Create rent
-        const ownerid = car.ownerId;
-        const duration = time;
-        const totalamount = parseInt(time) * car.pricePerHour;
+        // ✅ Compute total amount
+        const duration = parseFloat(time); // Ensure it's a number
+        const totalamount = duration * car.pricePerHour;
 
+        // ✅ Create rent
         const rent = await Rent.create({
             car: carid,
-            owner: ownerid,
+            owner: car.ownerId,
             dealer: dealerid,
             duration,
             totalamount
@@ -54,11 +55,12 @@ exports.createrent = async (req, res) => {
         console.error("Error creating rent:", error);
         return res.status(500).json({
             success: false,
-            message: "Issue while creating rent.",
+            message: "An error occurred while creating rent.",
             error: error.message
         });
     }
 };
+
 
 exports.cancelerent = async (req, res) => {
     try {
@@ -160,3 +162,12 @@ exports.updaterent = async (req, res) => {
         });
     }
 };
+
+exports.getMyRents=async(req,res)=>{
+    const {userId}=req.body;
+
+}
+
+exports.getAllRents=async(req,res)=>{
+
+}
